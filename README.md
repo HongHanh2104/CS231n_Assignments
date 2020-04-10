@@ -7,6 +7,6 @@ The course includes 3 assignments:
 ## Assignment 1:
 - [x] k-Nearest Neighbor classifier
 - [X] Training a Support Vector Machine
-- [ ] Implement a Softmax classifier
+- [X] Implement a Softmax classifier
 - [ ] Two-Layer Neural Network
 - [ ] Higher Level Representations: 
