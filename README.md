@@ -8,5 +8,12 @@ The course includes 3 assignments:
 - [x] k-Nearest Neighbor classifier
 - [X] Training a Support Vector Machine
 - [X] Implement a Softmax classifier
-- [ ] Two-Layer Neural Network
-- [ ] Higher Level Representations: 
+- [X] Two-Layer Neural Network
+- [X] Higher Level Representations
+
+## Assignment 2:
+- [x] Fully-connected Neural Network
+- [ ] Batch Normalization
+- [ ] Dropout
+- [ ] Convolutional Network
+- [ ] Pytorch on CIFAR-10
