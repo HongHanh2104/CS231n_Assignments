@@ -278,14 +278,16 @@ class FullyConnectedNet(object):
             affine_out, affine_cache = affine_forward(out, w, b)
             bn_out, bn_cache = batchnorm_forward(affine_out, 
                                                 self.params['gamma' + str(i + 1)],
-                                                self.params['beta' + str(i + 1)])
+                                                self.params['beta' + str(i + 1)],
+                                                self.bn_params[i])
             out, relu_cache = relu_forward(bn_out)
             caches[i + 1] = (affine_cache, bn_cache, relu_cache)
           elif self.normalization == 'layernorm':
             affine_out, affine_cache = affine_forward(out, w, b)
             ln_out, ln_cache = layernorm_forward(affine_out, 
                                                 self.params['gamma' + str(i + 1)],
-                                                self.params['beta' + str(i + 1)], self.bn_params[i])
+                                                self.params['beta' + str(i + 1)], 
+                                                self.bn_params[i])
             out, relu_cache = relu_forward(ln_out)
             caches[i + 1] = (affine_cache, ln_cache, relu_cache)
           else:
@@ -340,14 +342,14 @@ class FullyConnectedNet(object):
               # drelu --> dbatchnorm --> daffine
               affine_cache, bn_cache, relu_cache = caches[i]
               dbn_out = relu_backward(dout, relu_cache)
-              daffine_out, grads['gamma' + str(i)], grads['beta' + str(i)] = batchnorm_backward(dbn_out, bn_cache)
-              dout, grads['W' + str(i)], grads['b' + str(i)] = affine_backward(dfc_out, fc_cache)
+              dfc_out, grads['gamma' + str(i)], grads['beta' + str(i)] = batchnorm_backward(dbn_out, bn_cache)
+              dout, grads['W' + str(i)], grads['b' + str(i)] = affine_backward(dfc_out, affine_cache)
 
             elif self.normalization == 'layernorm':
-              fc_cache, ln_cache, relu_cache = caches[i]
+              affine_cache, ln_cache, relu_cache = caches[i]
               dln_out = relu_backward(dout, relu_cache)
               dfc_out, grads['gamma' + str(i)], grads['beta' + str(i)] = layernorm_backward(dln_out, ln_cache)
-              dout, grads['W' + str(i)], grads['b' + str(i)] = affine_backward(dfc_out, fc_cache)
+              dout, grads['W' + str(i)], grads['b' + str(i)] = affine_backward(dfc_out, affine_cache)
 
             else:
               dout, grads['W' + str(i)], grads['b' + str(i)] = affine_relu_backward(dout, caches[i])

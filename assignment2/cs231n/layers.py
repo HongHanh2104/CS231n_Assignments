@@ -201,7 +201,7 @@ def batchnorm_forward(x, gamma, beta, bn_param):
         mini_batch_mean = np.mean(x, axis=0)
         mini_batch_var = np.var(x, axis=0)
         x_hat = (x - mini_batch_mean)/ (np.sqrt(mini_batch_var + eps))
-        y = gamma * x_hat + beta
+        out = gamma * x_hat + beta
         cache = (x, mini_batch_mean, mini_batch_var, x_hat, eps, gamma, beta)
         running_mean = momentum * running_mean + (1 - momentum) * mini_batch_mean
         running_var = momentum * running_var + (1 - momentum) * mini_batch_var 
@@ -304,15 +304,20 @@ def batchnorm_backward_alt(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    dbeta = dout.sum(axis=cache['axis'])
-    dgamma = np.sum(dout * cache['z'], axis=cache['axis'])
+    # cache = (x, mini_batch_mean, mini_batch_var, x_hat, eps, gamma, beta)
+    x, sample_mean, sample_var, x_hat, eps, gamma, beta = cache
+    
+    dxhat = dout * gamma
+    
+    dbeta = np.sum(dout, axis=0)
+    dgamma = np.sum(dout * x_hat, axis=0)
 
     N = dout.shape[0]
-    z = cache['z']
-    dfdz = dout * cache['gamma']
-    dfdz_sum = np.sum(dfdz, axis=0)
-    dx = dfdz - dfdz_sum/N - np.sum(dfdz * z, axis=0) * z/N
-    dx /= cache['std']
+
+    dsample_var = np.sum(-1.0/2 * dxhat * x_hat/(sample_var + eps), axis=0)
+    dsample_mean = np.sum(-1.0/np.sqrt(sample_var + eps) * dxhat, axis=0)
+
+    dx = 1.0/np.sqrt(sample_var + eps) * dxhat + dsample_var * 2.0/N * (x - sample_mean) + 1.0/N * dsample_mean
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
     #                             END OF YOUR CODE                            #
@@ -360,14 +365,15 @@ def layernorm_forward(x, gamma, beta, ln_param):
     x_T = x.T
     mini_batch_mean = np.mean(x_T, axis=0)
     mini_batch_var = np.var(x_T, axis=0)
-    x_norm_T = (x_T - mini_batch_mean) / np.sqrt(mini_batch_var + eps)
+    x_norm_T = (x_T - mini_batch_mean) * (1./ np.sqrt(mini_batch_var + eps))
     x_norm = x_norm_T.T
-    out = x_norm * gamma * beta
+    out = x_norm * gamma + beta
     cache = (x, x_norm, gamma, mini_batch_mean, mini_batch_var, eps)
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
+    #print(out.mean(axis=1))
     return out, cache
 
 
