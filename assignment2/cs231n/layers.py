@@ -62,7 +62,7 @@ def affine_backward(dout, cache):
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     num_train = x.shape[0]
 
-    dx = np.dot(dout, w.T).reshape(*x.shape)
+    dx = np.dot(dout, w.T).reshape(x.shape)
     dw = np.dot(x.reshape(num_train, -1).T, dout)
     db = np.sum(dout, axis=0)
 
@@ -116,6 +116,7 @@ def relu_backward(dout, cache):
     # TODO: Implement the ReLU backward pass.                                 #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+    
     dx = np.zeros(x.shape)
     dx[x > 0] = 1
     dx *= dout
