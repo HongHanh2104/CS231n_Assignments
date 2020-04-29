@@ -16,4 +16,4 @@ The course includes 3 assignments:
 - [X] Batch Normalization
 - [X] Dropout
 - [X] Convolutional Network
-- [ ] Pytorch on CIFAR-10
+- [X] Pytorch on CIFAR-10
