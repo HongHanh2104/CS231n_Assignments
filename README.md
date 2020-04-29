@@ -13,7 +13,7 @@ The course includes 3 assignments:
 
 ## Assignment 2:
 - [x] Fully-connected Neural Network
-- [ ] Batch Normalization
-- [ ] Dropout
-- [ ] Convolutional Network
+- [X] Batch Normalization
+- [X] Dropout
+- [X] Convolutional Network
 - [ ] Pytorch on CIFAR-10
