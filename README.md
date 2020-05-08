@@ -17,3 +17,10 @@ The course includes 3 assignments:
 - [X] Dropout
 - [X] Convolutional Network
 - [X] Pytorch on CIFAR-10
+
+## Assignment 3:
+- [ ] Image Captioning with Vanilla RNNs
+- [ ] Image Captioning with LSTMs
+- [ ] Network Visualization: Saliency maps, Class Visualization, and Fooling Images
+- [ ] Style Transfer
+- [ ] Generative Adversarial Networks
