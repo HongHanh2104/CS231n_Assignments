@@ -7,4 +7,18 @@ assignment1/frameworkpython
 assignment1/requirements.txt
 assignment1/start_ipython_osx.sh
 
-
+# assignment3
+assignment3/cs231n/datasets
+assignment3/cs231n/__pycache__
+assignment3/collectSubmission_pytorch.sh
+assignment3/collectSubmission_tensorflow.sh
+assignment3/example_styletransfer.png
+assignment3/gan-checks-tf.npz
+assignment3/gan_outputs_pytorch.png
+assignment3/kitten.jpg
+assignment3/gan_outputs_tf.png
+assignment3/sky.jpg
+assignment3/style-transfer-checks.npz
+assignment3/start_ipython_osx.sh
+assignment3/style-transfer-checks-tf.npz
+assignment3/styles
